@@ -369,6 +369,7 @@
           <p>进程保活对于作为Android开发的程序猿应该并不陌生，一些App对于进程保活有着很强烈的需求。比如一个IM类App对于信息接收就需要app进程一直存活才可以，否则对方好友发送了信息，如果app已经被干掉从而导致无法收到信息，这样的用户体验是很差的。用户很可能会直接卸载掉你的app，因为这样的app对于用户来说没什么使用价值。</p>
 <p>我们都知道Android的App一般最少存在一个进程，或者多个进程。目前的主流App一般都会使用多进程的方案。多进程起到的作用可以增加进程存活的概率或者隔离危险代码（容易产生Crash）或者可以用来突破方法数65535的限制。</p>
 <a id="more"></a>
+
 <h1 id="进程划分"><a href="#进程划分" class="headerlink" title="进程划分?"></a>进程划分?</h1><p>Android中的进程通常被划分了5级，我们按重要程度由高到低排列一下：</p>
 <p><strong>1、Foreground process–前台进程</strong></p>
 <p>某个进程持有一个正在与用户交互的Activity并且该Activity正处于resume的状态。<br>某个进程持有一个Service，并且该Service与用户正在交互的Activity绑定。<br>某个进程持有一个Service，并且该Service调用startForeground()方法使之位于前台运行。<br>某个进程持有一个Service，并且该Service正在执行它的某个生命周期回调方法，比如onCreate()、 onStart()或onDestroy()。<br>某个进程持有一个BroadcastReceiver，并且该BroadcastReceiver正在执行其onReceive()方法。</p>
@@ -404,7 +405,7 @@
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-08-02T09:38:22+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-08-02T09:39:36+08:00">
   <a class='notlink'>
     <i class="fas fa-clock" aria-hidden="true"></i>
     <p>last updated at Aug 2, 2019</p>
