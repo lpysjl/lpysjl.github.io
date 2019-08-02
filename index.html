@@ -172,7 +172,7 @@
 			
 				<div class="m_search">
 					<form name="searchform" class="form u-search-form">
-						<input type="text" class="input u-search-input" placeholder="Search" />
+						<input type="text" class="input u-search-input" placeholder="搜索" />
 						<i class="icon fas fa-search fa-fw"></i>
 					</form>
 				</div>
@@ -281,6 +281,8 @@
   <section class="post-list">
     
       
+        
+          
         
           
         
@@ -461,7 +463,7 @@
         <div class="readmore">
           <a href="/2019/07/18/Iterator-Pattern/" class="flat-box">
             <i class="fas fa-book-open fa-fw" aria-hidden="true"></i>
-            Read More
+            阅读全文
           </a>
         </div>
       
@@ -470,6 +472,117 @@
       <div class="full-width auto-padding tags">
         
           <a href="/tags/设计模式/" rel="nofollow"><i class="fas fa-hashtag fa-fw"></i>设计模式</a>
+        
+      </div>
+    
+  </section>
+</article>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <article class="post reveal ">
+  
+
+
+  <section class='meta'>
+    
+    
+    <div class="meta" id="header-meta">
+      
+        
+  <h2 class="title">
+    <a href="/2019/04/02/Android-进程保活（二）双服务进程包活/">
+      Android 进程保活（二）双服务进程保活
+    </a>
+  </h2>
+
+
+      
+      <div class='new-meta-box'>
+        
+          
+        
+          
+            
+  <div class='new-meta-item author'>
+    <a href="http://lipeiyang.vip" rel="nofollow">
+      
+        <i class="fas fa-user" aria-hidden="true"></i>
+      
+      <p>梨</p>
+    </a>
+  </div>
+
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+    <p>2019-04-02</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+
+          
+        
+          
+            
+
+          
+        
+          
+            
+
+          
+        
+      </div>
+      
+        <hr>
+      
+    </div>
+  </section>
+
+
+  <section class="article typo">
+    <div class="article-entry" itemprop="articleBody">
+      <a id="more"></a>
+<p><strong>1、双进程守护保活方案</strong></p>
+<p>创建aidl接口文件用于进程间通信，如下:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">IMyAidlInterface</span></span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>方法自定义<br>创建本地服务(<strong>LocalService</strong>)以及远程服务(<strong>RemoteService</strong>)</p>
+<p>清单配置如下：<br><img src="2019-08-02-09-50-54.png"></p>
+<p>本地服务代码:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> android.app.Notification;</span><br><span class="line"><span class="keyword">import</span> android.app.Service;</span><br><span class="line"><span class="keyword">import</span> android.content.ComponentName;</span><br><span class="line"><span class="keyword">import</span> android.content.Context;</span><br><span class="line"><span class="keyword">import</span> android.content.Intent;</span><br><span class="line"><span class="keyword">import</span> android.content.ServiceConnection;</span><br><span class="line"><span class="keyword">import</span> android.os.Handler;</span><br><span class="line"><span class="keyword">import</span> android.os.IBinder;</span><br><span class="line"><span class="keyword">import</span> android.os.Message;</span><br><span class="line"><span class="keyword">import</span> android.os.RemoteException;</span><br><span class="line"><span class="keyword">import</span> android.util.Log;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 本地服务</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LocalService</span> <span class="keyword">extends</span> <span class="title">Service</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> IMyAidlInterface remoteService;</span><br><span class="line">    <span class="keyword">private</span> MyBinder myBinder;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LocalService</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">    ServiceConnection serviceConnection=<span class="keyword">new</span> ServiceConnection() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onServiceConnected</span><span class="params">(ComponentName name, IBinder binder)</span> </span>&#123;</span><br><span class="line">            Log.d(<span class="string">"zzzz"</span>, <span class="string">"onServiceConnected: localservice is connected..."</span>);</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line"><span class="comment">//                remoteService = (IMyAidlInterface) binder;</span></span><br><span class="line"><span class="comment">//                remoteService.getData("localservice");</span></span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onServiceDisconnected</span><span class="params">(ComponentName name)</span> </span>&#123;</span><br><span class="line">            Log.d(<span class="string">"zzzz"</span>, <span class="string">"onServiceDisconnected: localservice is disconnected..."</span>);</span><br><span class="line">            startService(<span class="keyword">new</span> Intent(LocalService.<span class="keyword">this</span>,RemoteService.class));</span><br><span class="line">            bindService(<span class="keyword">new</span> Intent(LocalService.<span class="keyword">this</span>,RemoteService.class),serviceConnection, Context.BIND_IMPORTANT);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">onStartCommand</span><span class="params">(Intent intent, <span class="keyword">int</span> flags, <span class="keyword">int</span> startId)</span> </span>&#123;</span><br><span class="line">        Log.d(<span class="string">"zzzz"</span>, <span class="string">"onStartCommand: localservice is onstartcommand..."</span>);</span><br><span class="line">        startForeground(<span class="number">1</span>,<span class="keyword">new</span> Notification());</span><br><span class="line">        bindService(<span class="keyword">new</span> Intent(<span class="keyword">this</span>,RemoteService.class),serviceConnection, Context.BIND_IMPORTANT);</span><br><span class="line">        startDo();</span><br><span class="line">        <span class="keyword">return</span> START_STICKY;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">startDo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        handler.postDelayed(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                handler.sendEmptyMessage(<span class="number">0</span>);</span><br><span class="line">                handler.postDelayed(<span class="keyword">this</span>,<span class="number">2</span>*<span class="number">1000</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,<span class="number">2</span>*<span class="number">1000</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">private</span> Handler handler=<span class="keyword">new</span> Handler()&#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleMessage</span><span class="params">(Message msg)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">super</span>.handleMessage(msg);</span><br><span class="line">            Log.d(<span class="string">"zzzz"</span>, <span class="string">"handleMessage: ****************************************"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> IBinder <span class="title">onBind</span><span class="params">(Intent intent)</span> </span>&#123;</span><br><span class="line">        myBinder = <span class="keyword">new</span> MyBinder();</span><br><span class="line">        <span class="keyword">return</span> myBinder;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">MyBinder</span> <span class="keyword">extends</span> <span class="title">IMyAidlInterface</span>.<span class="title">Stub</span></span>&#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">getData</span><span class="params">(String name)</span> <span class="keyword">throws</span> RemoteException </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> LocalService.class.getSimpleName();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>远程服务代码:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> android.app.Notification;</span><br><span class="line"><span class="keyword">import</span> android.app.Service;</span><br><span class="line"><span class="keyword">import</span> android.content.ComponentName;</span><br><span class="line"><span class="keyword">import</span> android.content.Context;</span><br><span class="line"><span class="keyword">import</span> android.content.Intent;</span><br><span class="line"><span class="keyword">import</span> android.content.ServiceConnection;</span><br><span class="line"><span class="keyword">import</span> android.os.IBinder;</span><br><span class="line"><span class="keyword">import</span> android.os.RemoteException;</span><br><span class="line"><span class="keyword">import</span> android.util.Log;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 远程服务</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RemoteService</span> <span class="keyword">extends</span> <span class="title">Service</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> MyBinder myBinder;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">RemoteService</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">    ServiceConnection serviceConnection=<span class="keyword">new</span> ServiceConnection() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onServiceConnected</span><span class="params">(ComponentName name, IBinder service)</span> </span>&#123;</span><br><span class="line">            Log.d(<span class="string">"zzzz"</span>, <span class="string">"onServiceConnected: remoteservice is connected..."</span>);</span><br><span class="line"><span class="comment">//            try &#123;</span></span><br><span class="line"><span class="comment">//                IMyAidlInterface localService= (IMyAidlInterface) service;</span></span><br><span class="line"><span class="comment">//                localService.getData(RemoteService.class.getSimpleName());</span></span><br><span class="line"><span class="comment">//            &#125; catch (RemoteException e) &#123;</span></span><br><span class="line"><span class="comment">//                e.printStackTrace();</span></span><br><span class="line"><span class="comment">//            &#125;</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onServiceDisconnected</span><span class="params">(ComponentName name)</span> </span>&#123;</span><br><span class="line">            Log.d(<span class="string">"zzzz"</span>, <span class="string">"onServiceDisconnected: remoteservice is disconnected..."</span>);</span><br><span class="line">            startService(<span class="keyword">new</span> Intent(RemoteService.<span class="keyword">this</span>,LocalService.class));</span><br><span class="line">            bindService(<span class="keyword">new</span> Intent(RemoteService.<span class="keyword">this</span>,LocalService.class),serviceConnection,Context.BIND_IMPORTANT);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> IBinder <span class="title">onBind</span><span class="params">(Intent intent)</span> </span>&#123;</span><br><span class="line">        myBinder = <span class="keyword">new</span> MyBinder();</span><br><span class="line">        <span class="keyword">return</span> myBinder;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">onStartCommand</span><span class="params">(Intent intent, <span class="keyword">int</span> flags, <span class="keyword">int</span> startId)</span> </span>&#123;</span><br><span class="line">        Log.d(<span class="string">"zzzz"</span>, <span class="string">"onStartCommand: remoteservice is onstartcommand..."</span>);</span><br><span class="line">        startForeground(<span class="number">1</span>,<span class="keyword">new</span> Notification());</span><br><span class="line">        bindService(<span class="keyword">new</span> Intent(<span class="keyword">this</span>,LocalService.class),serviceConnection, Context.BIND_IMPORTANT);</span><br><span class="line">        <span class="keyword">return</span> START_STICKY;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">MyBinder</span> <span class="keyword">extends</span> <span class="title">IMyAidlInterface</span>.<span class="title">Stub</span></span>&#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">getData</span><span class="params">(String name)</span> <span class="keyword">throws</span> RemoteException </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> RemoteService.class.getSimpleName();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>MainActivity中启动服务</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span></span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState)</span><br><span class="line">        setContentView(R.layout.activity_main)</span><br><span class="line"></span><br><span class="line">        startService(<span class="keyword">new</span> Intent(<span class="keyword">this</span>,LocalService.class));</span><br><span class="line">        startService(<span class="keyword">new</span> Intent(<span class="keyword">this</span>,RemoteService.class));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用静态注册广播接收系统重启或者屏幕解锁等系统广播来启动本地服务增加存活概率</p>
+<p>清单文件:<br><img src="2019-08-02-09-56-01.png"></p>
+<p>广播文件：<br><img src="2019-08-02-09-56-47.png"></p>
+<p>使用电源锁保证息屏后服务不被杀<br>清单文件中加入权限：</p>
+
+      
+    </div>
+    
+      <div class="full-width auto-padding tags">
+        
+          <a href="/tags/Android/" rel="nofollow"><i class="fas fa-hashtag fa-fw"></i>Android</a>
+        
+          <a href="/tags/进程保活/" rel="nofollow"><i class="fas fa-hashtag fa-fw"></i>进程保活</a>
         
       </div>
     
@@ -558,7 +671,7 @@
         <div class="readmore">
           <a href="/2019/04/02/Android进程保活-一-写在前面/" class="flat-box">
             <i class="fas fa-book-open fa-fw" aria-hidden="true"></i>
-            Read More
+            阅读全文
           </a>
         </div>
       
@@ -667,7 +780,7 @@
         <div class="readmore">
           <a href="/2018/12/04/Acache/" class="flat-box">
             <i class="fas fa-book-open fa-fw" aria-hidden="true"></i>
-            Read More
+            阅读全文
           </a>
         </div>
       
@@ -764,7 +877,7 @@
         <div class="readmore">
           <a href="/2018/07/22/Fresco-与-Picasso-、Glide-的比较/" class="flat-box">
             <i class="fas fa-book-open fa-fw" aria-hidden="true"></i>
-            Read More
+            阅读全文
           </a>
         </div>
       
@@ -860,7 +973,7 @@
         <div class="readmore">
           <a href="/2017/08/07/JAVA下实现多线程断点下载/" class="flat-box">
             <i class="fas fa-book-open fa-fw" aria-hidden="true"></i>
-            Read More
+            阅读全文
           </a>
         </div>
       
@@ -971,7 +1084,7 @@
         <div class="readmore">
           <a href="/2015/02/25/Android各个版本特性/" class="flat-box">
             <i class="fas fa-book-open fa-fw" aria-hidden="true"></i>
-            Read More
+            阅读全文
           </a>
         </div>
       
@@ -1171,7 +1284,7 @@
   <section class='widget tagcloud'>
     
 <header class='pure'>
-  <div><i class="fas fa-fire fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;Hot Tags</div>
+  <div><i class="fas fa-fire fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;热门标签</div>
   
     <a class="rightBtn"
     
@@ -1185,7 +1298,7 @@
 </header>
 
     <div class='content pure'>
-      <a href="/tags/Android/" style="font-size: 24px; color: #555">Android</a> <a href="/tags/JAVA基础/" style="font-size: 14px; color: #999">JAVA基础</a> <a href="/tags/第三方框架/" style="font-size: 14px; color: #999">第三方框架</a> <a href="/tags/设计模式/" style="font-size: 14px; color: #999">设计模式</a> <a href="/tags/进程保活/" style="font-size: 14px; color: #999">进程保活</a>
+      <a href="/tags/Android/" style="font-size: 24px; color: #555">Android</a> <a href="/tags/JAVA基础/" style="font-size: 14px; color: #999">JAVA基础</a> <a href="/tags/第三方框架/" style="font-size: 14px; color: #999">第三方框架</a> <a href="/tags/设计模式/" style="font-size: 14px; color: #999">设计模式</a> <a href="/tags/进程保活/" style="font-size: 19px; color: #777">进程保活</a>
     </div>
   </section>
 
@@ -1286,19 +1399,19 @@
     </div>
   
   <br>
-  <div><p>Blog content follows the <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en">Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) License</a></p>
+  <div><p>博客内容遵循 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</a></p>
 </div>
   <div>
-    Use
+    本站使用
     <a href="https://xaoxuu.com/wiki/material-x/" target="_blank" class="codename">梨的技术博客</a>
-    as theme
+    作为主题
     
-      , 
-      total visits
+      ，
+      总访问量为
       <span id="busuanzi_value_site_pv"><i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span>
-      times
+      次
     
-    . 
+    。
   </div>
 </footer>
 <script>setLoadingBarProgress(80);</script>
@@ -1404,15 +1517,15 @@
 <!-- 复制 -->
 <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
 <script>
-  let COPY_SUCCESS = "Copied";
-  let COPY_FAILURE = "Copy failed";
+  let COPY_SUCCESS = "复制成功";
+  let COPY_FAILURE = "复制失败";
   /*页面载入完成后，创建复制按钮*/
   !function (e, t, a) {
     /* code */
     var initCopyCode = function(){
       var copyHtml = '';
       copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
-      copyHtml += '  <i class="fa fa-copy"></i><span>Copy</span>';
+      copyHtml += '  <i class="fa fa-copy"></i><span>复制</span>';
       copyHtml += '</button>';
       $(".highlight .code pre").before(copyHtml);
       var clipboard = new ClipboardJS('.btn-copy', {
