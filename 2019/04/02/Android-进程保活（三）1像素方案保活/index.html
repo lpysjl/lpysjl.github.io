@@ -370,9 +370,9 @@
 <a id="more"></a>
 
 <h1 id="一个Demo来演示一下"><a href="#一个Demo来演示一下" class="headerlink" title="一个Demo来演示一下"></a>一个Demo来演示一下</h1><p>创建一个Android工程，默认为我们生成一个MainActivity，这是我们程序的入口Activity。我们通过观察oom_adj值来看一下优先级。<br>首先启动App，我们看oom_adj的值</p>
-<p><img src="/.vip//2019-08-02-10-04-50.png" alt></p>
+<p><img src="/2019/04/02/Android-进程保活（三）1像素方案保活/2019-08-02-10-04-50.png" alt></p>
 <p>我们看oom_adj的值为0，所以当前优先级很高不会被系统杀死。<br>我们点击home键或者back键来观察一下oom_adj。</p>
-<p><img src="/.vip//2019-08-02-10-05-20.png" alt></p>
+<p><img src="/2019/04/02/Android-进程保活（三）1像素方案保活/2019-08-02-10-05-20.png" alt></p>
 <p>我们发现oom_adj的值已经变为了6，所以退到后台的app在资源紧张的情况下就有可能被杀死了。</p>
 <p>关于oom_adj可参考:</p>
 <p><a href="https://www.lipeiyang.vip/2019/04/02/Android%E8%BF%9B%E7%A8%8B%E4%BF%9D%E6%B4%BB-%E4%B8%80-%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2/" target="_blank" rel="noopener">Android 进程保活（一）写在前面</a></p>
