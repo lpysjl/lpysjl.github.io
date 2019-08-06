@@ -172,7 +172,7 @@
 			
 				<div class="m_search">
 					<form name="searchform" class="form u-search-form">
-						<input type="text" class="input u-search-input" placeholder="搜尋" />
+						<input type="text" class="input u-search-input" placeholder="Search" />
 						<i class="icon fas fa-search fa-fw"></i>
 					</form>
 				</div>
@@ -375,17 +375,133 @@
 <li><p>应用框架层(Java Framework)<br> 应用框架层为开发人员提供了开发应用所需要的API,我们平常开发应用程序都是调用这一层所提供的API。这一层是用java写的，可以称为java Framework</p>
  <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1565020173933&di=95e1066eff7eef24f57660c4286052b0&imgtype=0&src=http%3A%2F%2Fwww.21ic.com%2Fd%2Ffile%2F201505%2F685945f44815300228f8816fc9675498.jpg">
  *(图1.1)*
-名称|功能描述</li>
+
+</li>
 </ol>
-<p>-|-<br>Activity Manager(活动管理器)|管理各个应用程序生命周期以及通常的导航回退功能<br>Location Manager(位置管理器)|提供地理位置以及定位功能服务<br>Packgee Manager(包管理器)|管理所有安卓在Android系统中的应用程序<br>Notification Manager(通知管理器)|使得应用程序可以在状态栏中显示自定义的提示信息<br>Resource Manager(资源管理器)|提供应用程序使用各种非代码资源，如本地化字符串、图片、布局文件、颜色文件等<br>Telephony Manager(电话管理器)|管理所有移动设备功能<br>Window Manager(窗口管理器)|管理所有开启的窗口程序<br>Content Providers(内容提供器)|使得不同应用程序之间可以共享数据<br>View System(视图系统)|构建应用程序的基本组件</p>
-<ol start="3">
-<li>系统运行库层(Native)<br>从图1.1中可以看出，系统运行库层分为两部分，分别C/C++程序库和Android运行时库。下面分别介绍他们。<br>（1）C/C++程序库<br>C/C++程序库能被Android系统中的不同组件所使用，并通过应用程序框架为开发者提供服务，</li>
-</ol>
-<p><em>主要的C/C++程序库</em><br>名称|功能描述<br>-|-<br>OpenGL ES|3D绘图函数库<br>Libc|从BSD继承来的标准C系统函数库，专门为基于嵌入式Linux的设备定制<br>Media Framework|多媒体库，支持多种常用的音频、视频格式录制与回放<br>SQLite|轻形的关系型数据库引擎<br>SGL|底层的2D图形渲染引擎<br>SSL|安全套接层，是为网络通信提供安全及数据完整性的一种安全协议<br>FreeType|可移植的字体引擎，它提供统一的接口来访问多种字体格式文件<br>（2）Android运行时库<br>从图1.1中可以看出，运行时库又分为核心库和ART(Android5.0系统之后，Dalvik虚拟机被ART取代)。核心库提供了Java语言核心库的大多数功能，这样开发者可以使用Java语言来编写Android应用。相较于JVM,Dalvik虚拟机（一下简称DVM）是专门为移动设备定制的，其允许在有限的内存中同时运行多个虚拟机的实例，并且每一个DVM应用作为一个独立的Linux进程执行。独立的进程可以防止在虚拟机崩溃的时候所有程序都被关闭。而替代DVM的ART机制与DVM不同。在DVM下，应用每次运行的时候，字节码都需要通过即时编译器转换为机器码，这会使得应用的运行速率降低；而在ART环境中，应用在第一次安装的时候，字节码就会预编译成机器码并存储在本地，这样应用每次运行时就无需编译了，运行速率也会大大提升。</p>
-<ol start="4">
-<li>硬件抽象层(HAL)<br>硬件抽象层是位于操作系统内核与硬件电路之间的接口层，其目的的在于将硬件抽象化。为了保护硬件厂商的知识产权，它隐藏了特定平台硬件接口细节，为操作系统提供虚拟硬件平台，使其具有硬件无关性，可在多种平台上进行移植。从软硬件测试的角度来看，软硬件的测试工作都可以分为基于硬件抽象层来完成，这使得软硬件测试工作并行称为可能。通俗来讲，就是将控制硬件的动作放在硬件抽象层中。</li>
-<li>Linux内核层<br>Android的核心系统服务基于Linux内核，在此基础上添加了部分Android专用的驱动。系统的安全性、内存管理、进程管理、网络协议栈和驱动模型等都依赖于该内核</li>
-</ol>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Activity Manager(活动管理器)</td>
+<td>管理各个应用程序生命周期以及通常的导航回退功能</td>
+</tr>
+<tr>
+<td>Location Manager(位置管理器)</td>
+<td>提供地理位置以及定位功能服务</td>
+</tr>
+<tr>
+<td>Packgee Manager(包管理器)</td>
+<td>管理所有安卓在Android系统中的应用程序</td>
+</tr>
+<tr>
+<td>Notification Manager(通知管理器)</td>
+<td>使得应用程序可以在状态栏中显示自定义的提示信息</td>
+</tr>
+<tr>
+<td>Resource Manager(资源管理器)</td>
+<td>提供应用程序使用各种非代码资源，如本地化字符串、图片、布局文件、颜色文件等</td>
+</tr>
+<tr>
+<td>Telephony Manager(电话管理器)</td>
+<td>管理所有移动设备功能</td>
+</tr>
+<tr>
+<td>Window Manager(窗口管理器)</td>
+<td>管理所有开启的窗口程序</td>
+</tr>
+<tr>
+<td>Content Providers(内容提供器)</td>
+<td>使得不同应用程序之间可以共享数据</td>
+</tr>
+<tr>
+<td>View System(视图系统)</td>
+<td>构建应用程序的基本组件</td>
+</tr>
+<tr>
+<td>3. 系统运行库层(Native)</td>
+<td></td>
+</tr>
+<tr>
+<td>从图1.1中可以看出，系统运行库层分为两部分，分别C/C++程序库和Android运行时库。下面分别介绍他们。</td>
+<td></td>
+</tr>
+<tr>
+<td>（1）C/C++程序库</td>
+<td></td>
+</tr>
+<tr>
+<td>C/C++程序库能被Android系统中的不同组件所使用，并通过应用程序框架为开发者提供服务，</td>
+<td></td>
+</tr>
+<tr>
+<td><em>主要的C/C++程序库</em></td>
+<td></td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>OpenGL ES</td>
+<td>3D绘图函数库</td>
+</tr>
+<tr>
+<td>Libc</td>
+<td>从BSD继承来的标准C系统函数库，专门为基于嵌入式Linux的设备定制</td>
+</tr>
+<tr>
+<td>Media Framework</td>
+<td>多媒体库，支持多种常用的音频、视频格式录制与回放</td>
+</tr>
+<tr>
+<td>SQLite</td>
+<td>轻形的关系型数据库引擎</td>
+</tr>
+<tr>
+<td>SGL</td>
+<td>底层的2D图形渲染引擎</td>
+</tr>
+<tr>
+<td>SSL</td>
+<td>安全套接层，是为网络通信提供安全及数据完整性的一种安全协议</td>
+</tr>
+<tr>
+<td>FreeType</td>
+<td>可移植的字体引擎，它提供统一的接口来访问多种字体格式文件</td>
+</tr>
+<tr>
+<td>（2）Android运行时库</td>
+<td></td>
+</tr>
+<tr>
+<td>从图1.1中可以看出，运行时库又分为核心库和ART(Android5.0系统之后，Dalvik虚拟机被ART取代)。核心库提供了Java语言核心库的大多数功能，这样开发者可以使用Java语言来编写Android应用。相较于JVM,Dalvik虚拟机（一下简称DVM）是专门为移动设备定制的，其允许在有限的内存中同时运行多个虚拟机的实例，并且每一个DVM应用作为一个独立的Linux进程执行。独立的进程可以防止在虚拟机崩溃的时候所有程序都被关闭。而替代DVM的ART机制与DVM不同。在DVM下，应用每次运行的时候，字节码都需要通过即时编译器转换为机器码，这会使得应用的运行速率降低；而在ART环境中，应用在第一次安装的时候，字节码就会预编译成机器码并存储在本地，这样应用每次运行时就无需编译了，运行速率也会大大提升。</td>
+<td></td>
+</tr>
+<tr>
+<td>4. 硬件抽象层(HAL)</td>
+<td></td>
+</tr>
+<tr>
+<td>硬件抽象层是位于操作系统内核与硬件电路之间的接口层，其目的的在于将硬件抽象化。为了保护硬件厂商的知识产权，它隐藏了特定平台硬件接口细节，为操作系统提供虚拟硬件平台，使其具有硬件无关性，可在多种平台上进行移植。从软硬件测试的角度来看，软硬件的测试工作都可以分为基于硬件抽象层来完成，这使得软硬件测试工作并行称为可能。通俗来讲，就是将控制硬件的动作放在硬件抽象层中。</td>
+<td></td>
+</tr>
+<tr>
+<td>5. Linux内核层</td>
+<td></td>
+</tr>
+<tr>
+<td>Android的核心系统服务基于Linux内核，在此基础上添加了部分Android专用的驱动。系统的安全性、内存管理、进程管理、网络协议栈和驱动模型等都依赖于该内核</td>
+<td></td>
+</tr>
+</tbody></table>
 
         </div>
         
@@ -397,10 +513,10 @@
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-08-06T08:32:19+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-08-06T08:34:45+08:00">
   <a class='notlink'>
     <i class="fas fa-clock" aria-hidden="true"></i>
-    <p>最後更新於 Aug 6, 2019</p>
+    <p>last updated at Aug 6, 2019</p>
   </a>
 </div>
 
@@ -473,7 +589,7 @@
                 
                     <section class="next">
                         <span class="art-item-right" aria-hidden="true">
-                            <h6>下一頁&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
+                            <h6>Next&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
                             <h4>
                                 <a href="/2019/08/04/img/新建文本文档/" rel="prev" title="">
                                     
@@ -687,7 +803,7 @@
   <section class='widget tagcloud'>
     
 <header class='pure'>
-  <div><i class="fas fa-fire fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;熱門標籤</div>
+  <div><i class="fas fa-fire fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;Hot Tags</div>
   
     <a class="rightBtn"
     
@@ -802,19 +918,19 @@
     </div>
   
   <br>
-  <div><p>博客內容遵循 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh_TW">姓名標示-非商業性-相同方式分享 4.0 國際 (CC BY-NC-SA 4.0) 協議</a></p>
+  <div><p>Blog content follows the <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en">Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) License</a></p>
 </div>
   <div>
-    本站使用
+    Use
     <a href="https://xaoxuu.com/wiki/material-x/" target="_blank" class="codename">了不起的梨</a>
-    作為主題
+    as theme
     
-      ，
-      總訪問量為
+      , 
+      total visits
       <span id="busuanzi_value_site_pv"><i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span>
-      次
+      times
     
-    。
+    . 
   </div>
 </footer>
 <script>setLoadingBarProgress(80);</script>
@@ -920,15 +1036,15 @@
 <!-- 复制 -->
 <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
 <script>
-  let COPY_SUCCESS = "複製成功";
-  let COPY_FAILURE = "複製失敗";
+  let COPY_SUCCESS = "Copied";
+  let COPY_FAILURE = "Copy failed";
   /*页面载入完成后，创建复制按钮*/
   !function (e, t, a) {
     /* code */
     var initCopyCode = function(){
       var copyHtml = '';
       copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
-      copyHtml += '  <i class="fa fa-copy"></i><span>複製</span>';
+      copyHtml += '  <i class="fa fa-copy"></i><span>Copy</span>';
       copyHtml += '</button>';
       $(".highlight .code pre").before(copyHtml);
       var clipboard = new ClipboardJS('.btn-copy', {
