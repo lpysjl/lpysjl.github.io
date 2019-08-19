@@ -172,7 +172,7 @@
 			
 				<div class="m_search">
 					<form name="searchform" class="form u-search-form">
-						<input type="text" class="input u-search-input" placeholder="Search" />
+						<input type="text" class="input u-search-input" placeholder="搜索" />
 						<i class="icon fas fa-search fa-fw"></i>
 					</form>
 				</div>
@@ -388,7 +388,7 @@
 <hr>
 <h2 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h2><p>首先导依赖：<br>implementation ‘android.arch.lifecycle:extensions:1.1.1’</p>
 <p>ViewModel类</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.arch.lifecycle.MutableLiveData;</span><br><span class="line"><span class="keyword">import</span> android.arch.lifecycle.ViewModel;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyViewModel</span> <span class="keyword">extends</span> <span class="title">ViewModel</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> MutableLiveData&lt;PersonBean&gt; personLiveData=<span class="keyword">new</span> MutableLiveData&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> MutableLiveData&lt;PersonBean&gt; <span class="title">getPersonLiveData</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> personLiveData;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setPersonLiveData</span><span class="params">(MutableLiveData&lt;PersonBean&gt; personLiveData)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.personLiveData = personLiveData;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">loadPersonData</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                personLiveData.postValue(<span class="keyword">new</span> PersonBean(<span class="string">"小明"</span>,<span class="number">20</span>,<span class="string">"北京市海淀区"</span>));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;).start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> android.arch.lifecycle.MutableLiveData;</span><br><span class="line"><span class="keyword">import</span> android.arch.lifecycle.ViewModel;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyViewModel</span> <span class="keyword">extends</span> <span class="title">ViewModel</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> MutableLiveData&lt;PersonBean&gt; personLiveData=<span class="keyword">new</span> MutableLiveData&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> MutableLiveData&lt;PersonBean&gt; <span class="title">getPersonLiveData</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> personLiveData;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setPersonLiveData</span><span class="params">(MutableLiveData&lt;PersonBean&gt; personLiveData)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.personLiveData = personLiveData;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">loadPersonData</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                personLiveData.postValue(<span class="keyword">new</span> PersonBean(<span class="string">"小明"</span>,<span class="number">20</span>,<span class="string">"北京市海淀区"</span>));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;).start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>Activity中使用</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ViewModelProviders.of(<span class="keyword">this</span>).get(MyViewModel.class).getPersonLiveData().observe(<span class="keyword">this</span>, <span class="keyword">new</span> Observer&lt;PersonBean&gt;() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onChanged</span><span class="params">(@Nullable PersonBean personBean)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
@@ -418,7 +418,7 @@
 <p>实现如上需求，如：</p>
 <p>原ViewModel实现类中加入有参构造如：<br><img src="/2019/07/09/jetpack-viewmodel/2019-07-10-10-12-43.png"></p>
 <p>我们可以使用新建Factory之类来进行参数传递，如：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.arch.lifecycle.ViewModel;</span><br><span class="line"><span class="keyword">import</span> android.arch.lifecycle.ViewModelProvider;</span><br><span class="line"><span class="keyword">import</span> android.support.annotation.NonNull;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyFactory</span> <span class="keyword">extends</span> <span class="title">ViewModelProvider</span>.<span class="title">NewInstanceFactory</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String params;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyFactory</span><span class="params">(String _params)</span></span>&#123;</span><br><span class="line">        params=_params;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@NonNull</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> &lt;T extends ViewModel&gt; <span class="function">T <span class="title">create</span><span class="params">(@NonNull Class&lt;T&gt; modelClass)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> (T) <span class="keyword">new</span> MyViewModel(params);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> android.arch.lifecycle.ViewModel;</span><br><span class="line"><span class="keyword">import</span> android.arch.lifecycle.ViewModelProvider;</span><br><span class="line"><span class="keyword">import</span> android.support.annotation.NonNull;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyFactory</span> <span class="keyword">extends</span> <span class="title">ViewModelProvider</span>.<span class="title">NewInstanceFactory</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String params;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyFactory</span><span class="params">(String _params)</span></span>&#123;</span><br><span class="line">        params=_params;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@NonNull</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> &lt;T extends ViewModel&gt; <span class="function">T <span class="title">create</span><span class="params">(@NonNull Class&lt;T&gt; modelClass)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> (T) <span class="keyword">new</span> MyViewModel(params);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>然后在activity中使用将原有代码修改为如：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ViewModelProviders.of(<span class="keyword">this</span>,<span class="keyword">new</span> MyFactory(<span class="string">"我是参数"</span>)).get(MyViewModel.class).getPersonLiveData().observe(<span class="keyword">this</span>, <span class="keyword">new</span> Observer&lt;PersonBean&gt;() &#123;</span><br><span class="line">           <span class="meta">@Override</span></span><br><span class="line">           <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onChanged</span><span class="params">(@Nullable PersonBean personBean)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">           &#125;</span><br><span class="line">       &#125;);</span><br></pre></td></tr></table></figure>
@@ -435,10 +435,10 @@
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-08-19T08:56:53+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-08-19T09:00:22+08:00">
   <a class='notlink'>
     <i class="fas fa-clock" aria-hidden="true"></i>
-    <p>last updated at Aug 19, 2019</p>
+    <p>最后更新于 Aug 19, 2019</p>
   </a>
 </div>
 
@@ -510,7 +510,7 @@
                 
                     <section class="prev">
                         <span class="art-item-left">
-                            <h6><i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;Previous</h6>
+                            <h6><i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;上一页</h6>
                             <h4>
                                 <a href="/2019/07/22/Android增量更新/" rel="prev" title="">
                                   
@@ -525,18 +525,18 @@
                 
                     <section class="next">
                         <span class="art-item-right" aria-hidden="true">
-                            <h6>Next&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
+                            <h6>下一页&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
                             <h4>
-                                <a href="/2019/07/02/jetpack-room/" rel="prev" title="Jetpack系列之Room">
+                                <a href="/2019/07/02/jetpack-lifecycles/" rel="prev" title="Jetpack系列之Lifecycles">
                                     
-                                        Jetpack系列之Room
+                                        Jetpack系列之Lifecycles
                                     
                                 </a>
                             </h4>
                             
                                 
                                 <h6 class="tags">
-                                    <a class="tag" href="/tags/Jetpack/"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i>Jetpack</a> <a class="tag" href="/tags/Room/"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i>Room</a>
+                                    <a class="tag" href="/tags/Jetpack/"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i>Jetpack</a> <a class="tag" href="/tags/Lifecycles/"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i>Lifecycles</a>
                                 </h6>
                             
                         </span>
@@ -640,7 +640,7 @@
   <section class='widget toc-wrapper'>
     
 <header class='pure'>
-  <div><i class="fas fa-list fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;TOC</div>
+  <div><i class="fas fa-list fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;本文目录</div>
   
     <div class='wrapper'><a class="s-toc rightBtn" rel="external nofollow noopener noreferrer" href="javascript:void(0)"><i class="fas fa-thumbtack fa-fw"></i></a></div>
   
@@ -750,7 +750,7 @@
   <section class='widget category'>
     
 <header class='pure'>
-  <div><i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;Categories</div>
+  <div><i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;文章分类</div>
   
     <a class="rightBtn"
     
@@ -789,7 +789,7 @@
   <section class='widget tagcloud'>
     
 <header class='pure'>
-  <div><i class="fas fa-fire fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;Hot Tags</div>
+  <div><i class="fas fa-fire fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;热门标签</div>
   
     <a class="rightBtn"
     
@@ -904,19 +904,19 @@
     </div>
   
   <br>
-  <div><p>Blog content follows the <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en">Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) License</a></p>
+  <div><p>博客内容遵循 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</a></p>
 </div>
   <div>
-    Use
+    本站使用
     <a href="https://xaoxuu.com/wiki/material-x/" target="_blank" class="codename">了不起的梨</a>
-    as theme
+    作为主题
     
-      , 
-      total visits
+      ，
+      总访问量为
       <span id="busuanzi_value_site_pv"><i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span>
-      times
+      次
     
-    . 
+    。
   </div>
 </footer>
 <script>setLoadingBarProgress(80);</script>
@@ -1022,15 +1022,15 @@
 <!-- 复制 -->
 <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
 <script>
-  let COPY_SUCCESS = "Copied";
-  let COPY_FAILURE = "Copy failed";
+  let COPY_SUCCESS = "复制成功";
+  let COPY_FAILURE = "复制失败";
   /*页面载入完成后，创建复制按钮*/
   !function (e, t, a) {
     /* code */
     var initCopyCode = function(){
       var copyHtml = '';
       copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
-      copyHtml += '  <i class="fa fa-copy"></i><span>Copy</span>';
+      copyHtml += '  <i class="fa fa-copy"></i><span>复制</span>';
       copyHtml += '</button>';
       $(".highlight .code pre").before(copyHtml);
       var clipboard = new ClipboardJS('.btn-copy', {
