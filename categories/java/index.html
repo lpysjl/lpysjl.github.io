@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   
-  <title>Tag: RxLifecycle | 了不起的梨</title>
+  <title>Category: java | 了不起的梨</title>
   
   
 
@@ -304,8 +304,8 @@
       
         
   <h2 class="title">
-    <a href="/2019/08/05/RxLifecycle/">
-      RxLifecycle 解决RxJava内存泄漏问题
+    <a href="/2019/07/02/GC机制/">
+      Jetpack系列之LiveData
     </a>
   </h2>
 
@@ -333,7 +333,7 @@
             <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-calendar-alt" aria-hidden="true"></i>
-    <p>2019-08-05</p>
+    <p>2019-07-02</p>
   </a>
 </div>
 
@@ -343,9 +343,9 @@
             
   
   <div class='new-meta-item category'>
-    <a href='/categories/Android第三方框架/' rel="nofollow">
+    <a href='/categories/java/' rel="nofollow">
       <i class="fas fa-folder-open" aria-hidden="true"></i>
-      <p>Android第三方框架</p>
+      <p>java</p>
     </a>
   </div>
 
@@ -372,24 +372,21 @@
 
   <section class="article typo">
     <div class="article-entry" itemprop="articleBody">
-      <p><a href="https://github.com/trello/RxLifecycle" target="_blank" rel="noopener">RxLifecycle官网</a></p>
-<p>RxLifecycle的出现是为了解决RxJava的内存泄漏问题，RxJava什么时候会出现内存泄漏？</p>
-<p>当使用RxJava订阅执行耗时操作，这是Activity被finish了，如果任务还未执行完成没有取消订阅，这时导致Activity无法回收进而导致内存泄漏问题。</p>
-      
-        <div class="readmore">
-          <a href="/2019/08/05/RxLifecycle/" class="flat-box">
-            <i class="fas fa-book-open fa-fw" aria-hidden="true"></i>
-            閱讀全文
-          </a>
-        </div>
+      <h2 id="GC机制"><a href="#GC机制" class="headerlink" title="GC机制"></a>GC机制</h2><p>垃圾回收需要完成两件事：找到垃圾，回收垃圾。 找到垃圾一般的话有两种方法：</p>
+<p> <strong>引用计数法:</strong> 当一个对象被引用时，它的引用计数器会加一，垃圾回收时会清理掉引用计数为0的对象。但这种方法有一个问题，比方说有两个对象 A 和 B，A 引用了 B，B 又引用了 A，除此之外没有别的对象引用 A 和 B，那么 A 和 B 在我们看来已经是垃圾对象，需要被回收，但它们的引用计数不为 0，没有达到回收的条件。正因为这个循环引用的问题，Java 并没有采用引用计数法。</p>
+<p>  <strong>可达性分析法:</strong> 我们把 Java 中对象引用的关系看做一张图，从根级对象不可达的对象会被垃圾收集器清除。根级对象一般包括 Java 虚拟机栈中的对象、本地方法栈中的对象、方法区中的静态对象和常量池中的常量。 回收垃圾的话有这么四种方法：</p>
+<p><strong>标记清除算法:</strong> 顾名思义分为两步，标记和清除。首先标记到需要回收的垃圾对象，然后回收掉这些垃圾对象。标记清除算法的缺点是清除垃圾对象后会造成内存的碎片化。</p>
+<p><strong>复制算法:</strong> 复制算法是将存活的对象复制到另一块内存区域中，并做相应的内存整理工作。复制算法的优点是可以避免内存碎片化，缺点也显而易见，它需要两倍的内存。</p>
+<p><strong>标记整理算法:</strong> 标记整理算法也是分两步，先标记后整理。它会标记需要回收的垃圾对象，清除掉垃圾对象后会将存活的对象压缩，避免了内存的碎片化。</p>
+<p><strong>分代算法:</strong><br>分代算法将对象分为新生代和老年代对象。那么为什么做这样的区分呢？主要是在Java运行中会产生大量对象，这些对象的生命周期会有很大的不同，有的生命周期很长，有的甚至使用一次之后就不再使用。所以针对不同生命周期的对象采用不同的回收策略，这样可以提高GC的效率。</p>
+<p>新生代对象分为三个区域：Eden 区和两个 Survivor 区。新创建的对象都放在 Eden区，当 Eden 区的内存达到阈值之后会触发 Minor GC，这时会将存活的对象复制到一个 Survivor 区中，这些存活对象的生命存活计数会加一。这时 Eden 区会闲置，当再一次达到阈值触发 Minor GC 时，会将Eden区和之前一个 Survivor 区中存活的对象复制到另一个 Survivor 区中，采用的是我之前提到的复制算法，同时它们的生命存活计数也会加一。<br>这个过程会持续很多遍，直到对象的存活计数达到一定的阈值后会触发一个叫做晋升的现象：新生代的这个对象会被放置到老年代中。<br>老年代中的对象都是经过多次 GC 依然存活的生命周期很长的 Java 对象。当老年代的内存达到阈值后会触发 Major GC，采用的是标记整理算法。</p>
+
       
     </div>
     
       <div class="full-width auto-padding tags">
         
-          <a href="/tags/框架/" rel="nofollow"><i class="fas fa-hashtag fa-fw"></i>框架</a>
-        
-          <a href="/tags/RxLifecycle/" rel="nofollow"><i class="fas fa-hashtag fa-fw"></i>RxLifecycle</a>
+          <a href="/tags/jvm/" rel="nofollow"><i class="fas fa-hashtag fa-fw"></i>jvm</a>
         
       </div>
     
@@ -412,6 +409,7 @@
 
     
   
+
 </div>
 <aside class='l_side'>
   
